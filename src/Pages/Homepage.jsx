@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import BlogCard from "../components/BlogCard";
 import CreatePost from "../Components/CreatePost";
 import { getAllPosts } from "../Services/services";
+import Spinner from "../Components/Spinner";
 
 function Homepage() {
   const [posts, setPosts] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       try {
         const data = await getAllPosts();
         console.log("Fetched posts:", data);
@@ -17,6 +20,8 @@ function Homepage() {
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchPosts();
@@ -34,8 +39,10 @@ function Homepage() {
         >
           Create New Post
         </button>
-
-        {posts ? (
+        {loading ? (
+          // loaded views
+          <Spinner />
+        ) : posts ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 m-4">
             {posts.map((post) => (
               <BlogCard key={post.id} post={post} />

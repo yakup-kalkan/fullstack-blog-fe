@@ -21,6 +21,16 @@ const Header = () => {
               Contact
             </Link>
           </li>
+          <li>
+            <Link to="/signin" className="hover:underline">
+              SignIn
+            </Link>
+          </li>
+          <li>
+            <Link to="/signup" className="hover:underline">
+              SignUp
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>
